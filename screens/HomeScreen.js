@@ -18,7 +18,7 @@ export default function HomeScreen({ navigation, darkMode }) {
 
       {/* App title - centered top */}
       <View style={styles.titleWrapper}>
-        <Text style={[styles.title, { color: darkMode ? '#f9fafb' : '#4F46E5' }]}>🎵 MoodTune</Text>
+        <Text style={[styles.title, { color: darkMode ? '#115173' : '#053f5e' }]}>🎵 MoodTune</Text>
       </View>
 
         <MoodForm

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = "http://192.168.180.251:8000";
+const API_URL = "https://mood-tune-python-service.onrender.com";
 
 export const getRecommendation = async (mood, city) => {
   const response = await axios.post(`${API_URL}/recommendation`, { mood, city });

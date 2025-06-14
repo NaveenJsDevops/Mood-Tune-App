@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 18,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
   artist: {
     fontSize: 18,
