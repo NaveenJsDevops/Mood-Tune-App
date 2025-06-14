@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "moodtune",
+    "name": "MoodTune",
     "slug": "moodtune",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -20,7 +20,8 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.naveenjs.moodtune"
+      "package": "com.naveenjs.moodtune",
+      "permissions": ["ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION"]
     },
     "web": {
       "favicon": "./assets/favicon.png"
