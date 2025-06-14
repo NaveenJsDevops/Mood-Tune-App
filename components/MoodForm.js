@@ -13,6 +13,7 @@ import {
 import { getRecommendation } from '../api';
 import * as Animatable from 'react-native-animatable';
 import { LinearGradient } from 'expo-linear-gradient';
+import Constants from 'expo-constants'; // ✅ Import for environment access
 
 const MOOD_OPTIONS = [
   { value: "happy", label: "😊  Happy" },
@@ -30,20 +31,14 @@ export default function MoodForm({ onResult, onError, darkMode, initialCity }) {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    if (city.length >= 2) {
-      fetchSuggestions(city);
-    } else {
-      setSuggestions([]);
-      setShowSuggestions(false);
-    }
-  }, [city]);
-
   const fetchSuggestions = async (query) => {
     try {
+      const apiKey = Constants.expoConfig?.extra?.GOOGLE_API_KEY;
+
       const response = await fetch(
-        `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(query)}&types=(cities)&key=AIzaSyCT6EkYUNIxOWQYEHPdh05gTxcxPDUnNFg`
+        `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(query)}&types=(cities)&key=${apiKey}`
       );
+
       const data = await response.json();
       const filtered = data.predictions.map(item => item.description.split(',')[0]);
       setSuggestions(filtered);
@@ -54,6 +49,14 @@ export default function MoodForm({ onResult, onError, darkMode, initialCity }) {
       setShowSuggestions(false);
     }
   };
+
+  useEffect(() => {
+    if (city.length >= 2) fetchSuggestions(city);
+    else {
+      setSuggestions([]);
+      setShowSuggestions(false);
+    }
+  }, [city]);
 
   const handleSubmit = async () => {
     onError(""); onResult(null);
@@ -80,9 +83,10 @@ export default function MoodForm({ onResult, onError, darkMode, initialCity }) {
       <View style={[styles.container, { backgroundColor: darkMode ? "#1f2937" : "#ffffff" }]}>
         {isLoading && (
           <View style={styles.loadingOverlay}>
-              <ActivityIndicator size="large" color="#6938fa" />
+            <ActivityIndicator size="large" color="#6938fa" />
           </View>
         )}
+
         <Text style={[styles.label, { color: darkMode ? "#e5e7eb" : "#000" }]}>🌆 Which city are you in?</Text>
         <TextInput
           style={[
@@ -101,6 +105,7 @@ export default function MoodForm({ onResult, onError, darkMode, initialCity }) {
             if (city.length >= 2) setShowSuggestions(true);
           }}
         />
+
         {showSuggestions && (
           <View style={styles.suggestionsList}>
             <FlatList
@@ -173,10 +178,7 @@ const styles = StyleSheet.create({
   },
   loadingOverlay: {
     position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+    top: 0, left: 0, right: 0, bottom: 0,
     backgroundColor: 'rgba(0,0,0,0.2)',
     justifyContent: 'center',
     alignItems: 'center',
