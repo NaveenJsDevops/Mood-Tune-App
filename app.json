@@ -30,7 +30,7 @@
       "eas": {
         "projectId": "5010413b-14be-4ee8-8e65-2f834d611ba3"
       },
-      "GOOGLE_API_KEY": process.env.GOOGLE_API_KEY
+      "GOOGLE_API_KEY": "@google_api_key"
     }
   }
 }
